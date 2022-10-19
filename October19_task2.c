@@ -185,6 +185,7 @@ int main(void)
   /* Write your code here */
  mm=0;
  ss=0;
+ z=0;
   while(1)
   {
 	  if(Bit1_GetVal()==0){
@@ -223,7 +224,11 @@ int main(void)
 		  		  }mm=z/100;
 		  		  ss=z%100;
 	  }
-	  
+	  if(flag==0){
+		  
+			  Disp(z);
+		  
+	  }
 	  
 	  
 //	  for(i=0;i<100;i++)
