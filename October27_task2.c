@@ -1,10 +1,10 @@
-0/* ###################################################################
+/* ###################################################################
 **     Filename    : ProcessorExpert.c
 **     Project     : ProcessorExpert
 **     Processor   : MKL25Z128VLK4
 **     Version     : Driver 01.01
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2022-10-12, 13:59, # CodeGen: 0
+**     Date/Time   : 2022-10-27, 15:01, # CodeGen: 0
 **     Abstract    :
 **         Main module.
 **         This module contains user's application code.
@@ -30,14 +30,32 @@
 /* Including needed modules to compile this module/procedure */
 #include "Cpu.h"
 #include "Events.h"
-#include "Bits1.h"
+#include "INT0.h"
+#include "ExtIntLdd1.h"
+#include "INT1.h"
+#include "ExtIntLdd2.h"
+#include "Seg7_CC.h"
 #include "BitsIoLdd1.h"
+#include "Seg7_CA.h"
+#include "BitsIoLdd2.h"
+#include "Led_CC.h"
+#include "BitsIoLdd3.h"
+#include "Led_CA.h"
+#include "BitsIoLdd4.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
-
+ void delay()
+{
+int i,j;
+	for(i=0;i<1000;i++){
+for(j=0;j<1000;j++);
+}
+}
+ 
+ 		
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
@@ -45,33 +63,38 @@ int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
 {
   /* Write your local variable definition here */
-long int i,j,k;
-long int x;
-int temp=0;
+	int x,i,j,k;
+
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
   PE_low_level_init();
-  
   /*** End of Processor Expert internal initialization.                    ***/
 
+             
+  
+  	 while(1)
+  	 {
+  		
+  		x=0x7;
+  	    k=0xc;
+  		for(j=0;j<8;j++)
+  		 {
+           	  Led_CC_PutVal(~x);
+  			 for(i=0;i<0x7ffff;i++);
+  				 x=x^k;
+  				k=k>>1;
+  		}
+  		 x=0x7;
+  		 k=0xc;
+  		 for(j=0;j<8;j++)
+  		{
+  			 Led_CA_PutVal(x);
+  			 for(i=0;i<0x7ffff;i++);
+  			  x=x^k;
+  			  k=k>>1;
+  		}
+  	 }
+  	 
   /* Write your code here */
-  while(1)
-  {
-	  x=0x70;
-          k=0xc0;
-	  for(j=0;j<8;j++)
-	  {
-		   Bits1_PutVal(x);
-                   x=x^k;
-                   Bits1_PutVal(x);
-                    k>>1;
-                   x=x^k;
-                  
-		  	  
-	  }
-	  
-		  
-		  	   
-  }
   /* For example: for(;;) { } */
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
